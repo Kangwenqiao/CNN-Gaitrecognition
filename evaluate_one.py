@@ -20,10 +20,20 @@ def evaluate(image_path=r'./GEI/001_nm-01_000.png'):
     image_name = image_path.split('/')[-1]  # 001_nm-01_000.png
     label = int(image_name[0:3])
     # 加载网络
+
+
+
+
+
     model = NetWork(c, h, w, n_class).to(device)  # 加载网络(调用network.py文件里的network函数)
     # 测试网络
     model.load_state_dict(torch.load(save_model_name, map_location=device))  # 加载刚刚保存的权重给网络
     model.eval()
+
+
+
+
+
     # y_pred_prob = model(image)  # 预测，和上面val_accuracy其实是一样的
     y_pred_prob = model(torch.from_numpy(image).to(device))  # 预测 (b,n_class)
     y_pred_prob = torch.softmax(y_pred_prob.float(), dim=-1).float().cpu().detach().numpy()  # (b,n_class)
